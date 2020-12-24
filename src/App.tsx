@@ -14,7 +14,7 @@ const SelectContainer = styled.div`
   margin: 48px;
   border-radius: 50px;
   background: #e6e6e6;
-  box-shadow: 20px 20px 60px #c4c4c4, -20px -20px 60px #ffffff;
+  box-shadow: 41px 41px 0 #656565, -41px -41px 0px #ffffff;
   max-height: 600px;
   overflow: scroll;
 `
@@ -24,7 +24,7 @@ const MapContainer = styled.div`
   padding: 12px;
   border-radius: 50px;
   background: #e6e6e6;
-  box-shadow: 20px 20px 60px #c4c4c4, -20px -20px 60px #ffffff;
+  box-shadow: 41px 41px 0 #656565, -41px -41px 0px #ffffff;
 `
 
 function App() {
@@ -60,7 +60,11 @@ function App() {
                 res.country_name &&
                 !countriesBeen.includes(res.country_name)
               ) {
-                console.warn(countriesBeen, res.country_name, countriesBeen.includes(res.country_name))
+                console.warn(
+                  countriesBeen,
+                  res.country_name,
+                  countriesBeen.includes(res.country_name),
+                )
                 setCountriesBeen((prevState) =>
                   [...prevState, res.country_name].sort(),
                 )
