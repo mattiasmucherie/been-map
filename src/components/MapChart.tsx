@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React  from 'react'
 import {
   ComposableMap,
   Geographies,
@@ -22,20 +22,30 @@ function removeItemAll(arr: string[], value: string) {
   }
   return arr
 }
+interface MapChartProps {
+  countriesBeen: string[]
+  setCountriesBeen:  React.Dispatch<React.SetStateAction<string[]>>
+  setCountryHover: React.Dispatch<React.SetStateAction<string>>
+}
 
-const MapChart = () => {
-  const [countryHover, setCountryHover] = useState('')
-  const [countriesBeen, setCountriesBeen] = useState<string[]>([])
+const MapChart: React.FC<MapChartProps> = ({countriesBeen,setCountriesBeen, setCountryHover}) => {
 
   const selectCountry = (c: string) => {
     if (!countriesBeen.includes(c)) {
-      setCountriesBeen((prevState) => [...prevState, c].sort())
+      setCountriesBeen((prevState) => {
+        const sortedNewList = [ ...prevState, c ].sort()
+        localStorage.setItem('listOfCountries', sortedNewList.toLocaleString())
+        return sortedNewList
+      })
     } else {
       const index = countriesBeen.indexOf(c)
       if (index > -1) {
-        setCountriesBeen((prevState) => removeItemAll(prevState, c))
-      }
-    }
+        setCountriesBeen((prevState) => {
+          const cleanedList = removeItemAll(prevState, c)
+          localStorage.setItem('listOfCountries', cleanedList.toLocaleString())
+          return cleanedList
+      })
+    }}
   }
   return (
     <ComposableMap
@@ -66,7 +76,7 @@ const MapChart = () => {
                   : '#297373'
               }
               onMouseEnter={() => setCountryHover(geo.properties.NAME_LONG)}
-              onMouseLeave={() => setCountryHover('')}
+              onMouseLeave={() => setCountryHover('no country')}
               onMouseDown={() => selectCountry(geo.properties.NAME_LONG)}
               style={{
                 default: {
