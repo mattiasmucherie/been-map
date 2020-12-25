@@ -11,7 +11,7 @@ import { Geo } from '../types/geoTypes'
 import { colors } from '../utils/colors'
 
 const geoUrl =
-  'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json'
+  'https://raw.githubusercontent.com/mattiasmucherie/been-map/master/src/assets/world-110m.json'
 
 const removeItemAll = (arr: string[], value: string) => {
   let i = 0
