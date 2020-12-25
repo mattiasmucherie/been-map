@@ -8,22 +8,11 @@ import {
   ZoomableGroup,
 } from 'react-simple-maps'
 import { Geo } from '../types/geoTypes'
-import { colors } from '../utils/colors'
+import { colors, shadeColor } from '../utils/colors'
+import { removeItemAll } from '../utils/countries'
 
 const geoUrl =
   'https://raw.githubusercontent.com/mattiasmucherie/been-map/master/src/assets/world-110m.json'
-
-const removeItemAll = (arr: string[], value: string) => {
-  let i = 0
-  while (i < arr.length) {
-    if (arr[i] === value) {
-      arr.splice(i, 1)
-    } else {
-      ++i
-    }
-  }
-  return arr
-}
 
 interface MapChartProps {
   countriesBeen: string[]
@@ -56,7 +45,7 @@ const MapChart: React.FC<MapChartProps> = ({
   }
   return (
     <ComposableMap
-      data-tip=""
+      data-tip="test"
       projection="geoEqualEarth"
       projectionConfig={{
         scale: 205,
@@ -96,7 +85,7 @@ const MapChart: React.FC<MapChartProps> = ({
                     outline: 0,
                   },
                   hover: {
-                    fill: colors.secondary10,
+                    fill: shadeColor(colors.secondary, 15),
                     outline: 0,
                   },
                   pressed: {

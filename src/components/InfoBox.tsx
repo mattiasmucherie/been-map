@@ -1,6 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react'
+import styled, { css } from 'styled-components'
 import { colors } from '../utils/colors'
+import { CogIcon } from '../assets/CogIcon'
+import { Modal } from './Modal'
 
 const UnorderedList = styled.ul`
   max-height: 300px;
@@ -17,7 +19,7 @@ const ListedItems = styled.li`
   padding: 5px 5px;
   overflow: hidden;
 `
-const ClearButton = styled.button`
+const sharedButton = css`
   font-family: 'Poppins', sans-serif;
   padding: 24px;
   font-size: 20px;
@@ -31,9 +33,20 @@ const ClearButton = styled.button`
     box-shadow: inset 6px 6px 21px #c4c4c4, inset -6px -6px 21px #ffffff;
   }
 `
+const ClearButton = styled.button`
+  ${sharedButton}
+`
 const HoverCountryText = styled.span`
   display: inline;
   font-weight: bold;
+`
+const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+const SettingsButton = styled.button`
+  ${sharedButton}
 `
 
 interface InfoBoxProps {
@@ -46,6 +59,11 @@ const InfoBox: React.FC<InfoBoxProps> = ({
   countryHover,
   setCountriesBeen,
 }) => {
+  const [showModal, setShowModal] = useState(false)
+
+  const openModal = () => {
+    setShowModal((prevState) => !prevState)
+  }
   const clearCountries = () => {
     setCountriesBeen([])
     localStorage.removeItem('listOfCountries')
@@ -63,7 +81,13 @@ const InfoBox: React.FC<InfoBoxProps> = ({
           ))}
         </UnorderedList>
       )}
-      <ClearButton onClick={clearCountries}>Clear Countries</ClearButton>
+      <ButtonContainer>
+        <ClearButton onClick={clearCountries}>Clear Countries</ClearButton>
+        <SettingsButton onClick={openModal}>
+          <CogIcon />
+        </SettingsButton>
+      </ButtonContainer>
+      <Modal showModal={showModal} setShowModal={setShowModal}>Ability to change color of map coming soon :) </Modal>
     </>
   )
 }
