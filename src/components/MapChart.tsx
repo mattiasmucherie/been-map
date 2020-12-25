@@ -7,11 +7,12 @@ import {
   Sphere,
 } from 'react-simple-maps'
 import { Geo } from '../types/geoTypes'
+import { colors } from '../utils/colors'
 
 const geoUrl =
   'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json'
 
-function removeItemAll(arr: string[], value: string) {
+const removeItemAll = (arr: string[], value: string) => {
   let i = 0
   while (i < arr.length) {
     if (arr[i] === value) {
@@ -22,6 +23,7 @@ function removeItemAll(arr: string[], value: string) {
   }
   return arr
 }
+
 interface MapChartProps {
   countriesBeen: string[]
   setCountriesBeen: React.Dispatch<React.SetStateAction<string[]>>
@@ -76,22 +78,22 @@ const MapChart: React.FC<MapChartProps> = ({
               geography={geo}
               fill={
                 countriesBeen.includes(geo.properties.NAME_LONG)
-                  ? '#ff8552'
-                  : '#297373'
+                  ? colors.secondary
+                  : colors.primaryDark
               }
               onMouseEnter={() => setCountryHover(geo.properties.NAME_LONG)}
               onMouseLeave={() => setCountryHover('no country')}
-              onMouseUp={() => selectCountry(geo.properties.NAME_LONG)}
+              onClick={() => selectCountry(geo.properties.NAME_LONG)}
               style={{
                 default: {
                   outline: 0,
                 },
                 hover: {
-                  fill: '#ffa078',
+                  fill: colors.secondary10,
                   outline: 0,
                 },
                 pressed: {
-                  fill: '#ff7033',
+                  fill: colors.secondary,
                   outline: 0,
                 },
               }}

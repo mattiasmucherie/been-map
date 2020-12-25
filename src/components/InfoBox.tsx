@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { colors } from '../utils/colors'
 
 const UnorderedList = styled.ul`
   max-height: 300px;
@@ -8,29 +9,29 @@ const UnorderedList = styled.ul`
   flex-direction: column;
   flex-wrap: wrap;
   overflow: scroll;
-  background: #e6e6e6;
+  background: ${colors.white};
   border-top: 1px solid #c4c4c4;
   padding: 16px;
 `
 const ListedItems = styled.li`
   padding: 5px 5px;
-  //max-width: 200px;
   overflow: hidden;
 `
 const ClearButton = styled.button`
-  font-family: 'Poppins',sans-serif;
+  font-family: 'Poppins', sans-serif;
   padding: 24px;
   font-size: 20px;
   border: none;
   border-radius: 24px;
-  background: #e6e6e6;
+  background: ${colors.white};
   box-shadow: 6px 6px 21px #c4c4c4, -6px -6px 21px #ffffff;
   cursor: pointer;
+  margin: 12px;
   &:hover {
     box-shadow: inset 6px 6px 21px #c4c4c4, inset -6px -6px 21px #ffffff;
   }
 `
-const HoverCountryText = styled.p`
+const HoverCountryText = styled.span`
   display: inline;
   font-weight: bold;
 `
@@ -52,10 +53,9 @@ const InfoBox: React.FC<InfoBoxProps> = ({
   return (
     <>
       <h1>Where have I been?</h1>
-      <p>
-        {' '}
+      <div>
         Hovering: <HoverCountryText>{countryHover}</HoverCountryText>
-      </p>
+      </div>
       {!!countriesBeen.length && (
         <UnorderedList>
           {countriesBeen.map((c) => (

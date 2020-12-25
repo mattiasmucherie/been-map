@@ -1,12 +1,31 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
+import { createGlobalStyle } from 'styled-components'
+
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+import { colors } from './utils/colors'
 
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: ${colors.white};
+    color: ${colors.black};
+  }
+  svg {
+    display: inline-block;
+    vertical-align: middle;
+  }
+`
 ReactDOM.render(
   <React.StrictMode>
     <App />
+    <GlobalStyle />
   </React.StrictMode>,
   document.getElementById('root'),
 )

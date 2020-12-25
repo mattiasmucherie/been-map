@@ -3,22 +3,20 @@ import styled from 'styled-components'
 import MapChart from './components/MapChart'
 import { getIpCountry } from './utils/http'
 import InfoBox from './components/InfoBox'
+import { colors } from './utils/colors'
 
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   padding: 1%;
-  //@media (max-width: 1500px) {
-  //  padding: 12px;
-  //}
 `
 const InfoContainer = styled.div`
   flex: 1 1 300px;
   padding: 24px;
   margin: 3%;
   border-radius: 50px;
-  background: #e6e6e6;
+  background: ${colors.white};
   box-shadow: 20px 20px 60px #c4c4c4, -20px -20px 60px #ffffff;
   text-align: center;
   @media (max-width: 1360px) {
@@ -30,11 +28,8 @@ const MapContainer = styled.div`
   flex: 2 1 800px;
   padding: 12px;
   border-radius: 50px;
-  background: #e6e6e6;
+  background: ${colors.white};
   box-shadow: 20px 20px 60px #c4c4c4, -20px -20px 60px #ffffff;
-  //@media (max-width: 1500px) {
-  //  margin: 24px;
-  //}
 `
 
 function App() {
