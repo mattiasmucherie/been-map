@@ -5,6 +5,7 @@ import {
   Geography,
   Graticule,
   Sphere,
+  ZoomableGroup,
 } from 'react-simple-maps'
 import { Geo } from '../types/geoTypes'
 import { colors } from '../utils/colors'
@@ -68,39 +69,46 @@ const MapChart: React.FC<MapChartProps> = ({
         height: 'auto',
       }}
     >
-      <Sphere stroke="#DDD" id="sphere" fill="transparent" strokeWidth={0.5} />
-      <Graticule stroke="#DDD" />
-      <Geographies geography={geoUrl}>
-        {({ geographies }) =>
-          geographies.map((geo: Geo) => (
-            <Geography
-              key={geo.rsmKey}
-              geography={geo}
-              fill={
-                countriesBeen.includes(geo.properties.NAME_LONG)
-                  ? colors.secondary
-                  : colors.primaryDark
-              }
-              onMouseEnter={() => setCountryHover(geo.properties.NAME_LONG)}
-              onMouseLeave={() => setCountryHover('no country')}
-              onClick={() => selectCountry(geo.properties.NAME_LONG)}
-              style={{
-                default: {
-                  outline: 0,
-                },
-                hover: {
-                  fill: colors.secondary10,
-                  outline: 0,
-                },
-                pressed: {
-                  fill: colors.secondary,
-                  outline: 0,
-                },
-              }}
-            />
-          ))
-        }
-      </Geographies>
+      <ZoomableGroup zoom={1}>
+        <Sphere
+          stroke="#DDD"
+          id="sphere"
+          fill="transparent"
+          strokeWidth={0.5}
+        />
+        <Graticule stroke="#DDD" />
+        <Geographies geography={geoUrl}>
+          {({ geographies }) =>
+            geographies.map((geo: Geo) => (
+              <Geography
+                key={geo.rsmKey}
+                geography={geo}
+                fill={
+                  countriesBeen.includes(geo.properties.NAME_LONG)
+                    ? colors.secondary
+                    : colors.primaryDark
+                }
+                onMouseEnter={() => setCountryHover(geo.properties.NAME_LONG)}
+                onMouseLeave={() => setCountryHover('no country')}
+                onClick={() => selectCountry(geo.properties.NAME_LONG)}
+                style={{
+                  default: {
+                    outline: 0,
+                  },
+                  hover: {
+                    fill: colors.secondary10,
+                    outline: 0,
+                  },
+                  pressed: {
+                    fill: colors.secondary,
+                    outline: 0,
+                  },
+                }}
+              />
+            ))
+          }
+        </Geographies>
+      </ZoomableGroup>
     </ComposableMap>
   )
 }
