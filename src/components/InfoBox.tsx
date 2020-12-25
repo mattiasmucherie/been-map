@@ -87,7 +87,9 @@ const InfoBox: React.FC<InfoBoxProps> = ({
           <CogIcon />
         </SettingsButton>
       </ButtonContainer>
-      <Modal showModal={showModal} setShowModal={setShowModal}>Ability to change color of map coming soon :) </Modal>
+      <Modal showModal={showModal} setShowModal={setShowModal}>
+        Ability to change color of map coming soon :)
+      </Modal>
     </>
   )
 }
