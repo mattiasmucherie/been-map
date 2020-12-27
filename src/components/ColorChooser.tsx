@@ -10,15 +10,20 @@ const Container = styled.div`
 `
 const DescriptionText = styled.span`
   padding-right: 12px;
+  user-select: none;
 `
 const Input = styled.input`
-  border-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
   background: #e6e6e6;
   box-shadow: inset 5px 5px 10px #c4c4c4, inset -5px -5px 10px #ffffff;
   border: none;
   padding: 16px;
   font-size: 16px;
-  max-width: 100px;
+  max-width: 64px;
+  &:focus{
+    outline: none;
+  }
 `
 interface ColorPreviewProps {
   currentColor: string
@@ -34,8 +39,14 @@ const ColorContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  //cursor: pointer;
 `
 const HashText = styled.span`
+  padding: 13px;
+  box-shadow:  5px 5px 10px #c4c4c4,  -5px -5px 10px #ffffff;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  user-select: none;
 `
 
 interface ColorChooserProps {
@@ -47,8 +58,8 @@ const ColorChooser: React.FC<ColorChooserProps> = ({ description, action, curren
   const dispatch = useDispatch()
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (/^#([0-9A-F]{6})$/i.test(event.target.value)) {
-      dispatch(action(event.target.value))
+    if (/^([0-9A-F]{6})$/i.test(event.target.value)) {
+      dispatch(action(`#${event.target.value}`))
     }
   }
   return (
@@ -57,7 +68,7 @@ const ColorChooser: React.FC<ColorChooserProps> = ({ description, action, curren
         <DescriptionText>{description}</DescriptionText>
         <ColorContainer>
           <HashText>#</HashText>
-          <Input placeholder={currentColor} onChange={onChange} />
+          <Input placeholder={currentColor.substring(1)} onChange={onChange} />
           <ColorPreview currentColor={currentColor} />
         </ColorContainer>
       </Container>
