@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { createGlobalStyle } from 'styled-components'
+import { Provider } from 'react-redux'
+import store from './store/store'
 
 import App from './App'
 import reportWebVitals from './reportWebVitals'
@@ -24,8 +26,10 @@ const GlobalStyle = createGlobalStyle`
 `
 ReactDOM.render(
   <React.StrictMode>
-    <App />
-    <GlobalStyle />
+    <Provider store={store}>
+      <App />
+      <GlobalStyle />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
 )

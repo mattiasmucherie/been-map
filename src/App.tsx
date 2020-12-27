@@ -66,18 +66,10 @@ function App() {
   return (
     <Container>
       <InfoContainer>
-        <InfoBox
-          countriesBeen={countriesBeen}
-          countryHover={countryHover}
-          setCountriesBeen={setCountriesBeen}
-        />
+        <InfoBox countriesBeen={countriesBeen} countryHover={countryHover} setCountriesBeen={setCountriesBeen} />
       </InfoContainer>
       <MapContainer>
-        <MapChart
-          countriesBeen={countriesBeen}
-          setCountriesBeen={setCountriesBeen}
-          setCountryHover={setCountryHover}
-        />
+        <MapChart countriesBeen={countriesBeen} setCountriesBeen={setCountriesBeen} setCountryHover={setCountryHover} />
       </MapContainer>
     </Container>
   )

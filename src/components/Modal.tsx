@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react'
 import { animated, useSpring } from 'react-spring'
 import styled from 'styled-components'
+import { colors } from '../utils/colors'
 
 const Background = styled.div`
   width: 100%;
@@ -15,27 +16,23 @@ const Background = styled.div`
 `
 
 const ModalWrapper = styled.div`
-  width: 80%;
+  margin: 8px;
   max-width: 800px;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
-  background: #fff;
+  background: ${colors.white};
   color: #000;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   position: relative;
   z-index: 10;
   border-radius: 10px;
+  padding: 24px;
+  text-align: left;
 `
 
 interface ModalProps {
   showModal: boolean
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>
 }
-export const Modal: React.FC<ModalProps> = ({
-  showModal,
-  setShowModal,
-  children,
-}) => {
+export const Modal: React.FC<ModalProps> = ({ showModal, setShowModal, children }) => {
   const modalRef = useRef(null)
   const props = useSpring({
     config: {
@@ -65,13 +62,13 @@ export const Modal: React.FC<ModalProps> = ({
 
   return (
     <>
-      {showModal ? (
-        <animated.div style={props}>
+      <animated.div style={props}>
+        {showModal ? (
           <Background ref={modalRef} onClick={closeModal}>
             <ModalWrapper>{children}</ModalWrapper>
           </Background>
-        </animated.div>
-      ) : null}
+        ) : null}
+      </animated.div>
     </>
   )
 }

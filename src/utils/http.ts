@@ -1,8 +1,6 @@
 export const getIpCountry = async () => {
   try {
-    const ipJSON = await fetch(
-      'https://cors-anywhere.herokuapp.com/https://api.ipify.org?format=json',
-    )
+    const ipJSON = await fetch('https://cors-anywhere.herokuapp.com/https://api.ipify.org?format=json')
     const ip = await ipJSON.json()
     const countryIPJSON = await fetch(
       `https://cors-anywhere.herokuapp.com/http://api.ipstack.com/${ip.ip}?access_key=${process.env.REACT_APP_IPSTACK_API_KEY}`,

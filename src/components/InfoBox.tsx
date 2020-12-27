@@ -3,6 +3,11 @@ import styled, { css } from 'styled-components'
 import { colors } from '../utils/colors'
 import { CogIcon } from '../assets/CogIcon'
 import { Modal } from './Modal'
+import { useSelector } from 'react-redux'
+import { State } from '../store/reducer'
+import { selectPrimary, selectSecondary } from '../store/selectors'
+import { changePrimary, changeSecondary } from '../store/actions'
+import ColorChooser from './ColorChooser'
 
 const UnorderedList = styled.ul`
   max-height: 300px;
@@ -54,12 +59,10 @@ interface InfoBoxProps {
   countryHover: string
   setCountriesBeen: React.Dispatch<React.SetStateAction<string[]>>
 }
-const InfoBox: React.FC<InfoBoxProps> = ({
-  countriesBeen,
-  countryHover,
-  setCountriesBeen,
-}) => {
+const InfoBox: React.FC<InfoBoxProps> = ({ countriesBeen, countryHover, setCountriesBeen }) => {
   const [showModal, setShowModal] = useState(false)
+  const primary = useSelector((state: State) => selectPrimary(state))
+  const secondary = useSelector((state: State) => selectSecondary(state))
 
   const openModal = () => {
     setShowModal((prevState) => !prevState)
@@ -88,7 +91,8 @@ const InfoBox: React.FC<InfoBoxProps> = ({
         </SettingsButton>
       </ButtonContainer>
       <Modal showModal={showModal} setShowModal={setShowModal}>
-        Ability to change color of map coming soon :)
+        <ColorChooser action={changePrimary} description="Not selected countries" currentColor={primary} />
+        <ColorChooser action={changeSecondary} description="Selected countries" currentColor={secondary} />
       </Modal>
     </>
   )
