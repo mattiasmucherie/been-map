@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 import { State } from '../store/reducer'
 import { selectPrimary, selectSecondary } from '../store/selectors'
 
-const geoUrl = 'https://raw.githubusercontent.com/mattiasmucherie/been-map/master/src/assets/world-110m.json'
+const geoUrl = 'https://raw.githubusercontent.com/mattiasmucherie/been-map/master/client/src/assets/world-110m.json'
 
 interface MapChartProps {
   countriesBeen: string[]
