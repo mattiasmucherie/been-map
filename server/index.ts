@@ -4,7 +4,6 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 
-console.log(process.env);
 const port = process.env.API_PORT;
 
 app.get('/', (_req, res) => {
