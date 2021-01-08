@@ -1,0 +1,18 @@
+version: '3.1'
+
+services:
+  beenmap_db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=beenmapdb
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - beenmap_db:/var/lib/postgresql/data/pgdata
+    ports:
+      - '5432:5432'
+volumes:
+  beenmap_db: 
