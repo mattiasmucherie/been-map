@@ -14,7 +14,13 @@ export class User extends BaseEntity {
 	id: number;
 
 	@Column({ type: 'text', nullable: true, unique: true })
-	userName: string;
+	username: string;
+
+	@Column({ type: 'text', nullable: true })
+	password: string;
+
+	@Column({ type: 'text', nullable: true })
+	salt: string;
 
 	@OneToOne(() => Map)
 	@JoinColumn()

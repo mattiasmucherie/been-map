@@ -1,6 +1,7 @@
 import express from 'express';
 import { Map } from '../entities/Map';
 import { User } from '../entities/User';
+import { authMiddleware } from './../middlewear/auth.middlewear';
 
 export let mapRouter = express.Router();
 
@@ -20,8 +21,9 @@ mapRouter.get('/:id', async (req, res) => {
 	res.json(map);
 });
 
-mapRouter.post('/', async (req, res) => {
-	const id = 1; // get from token
+mapRouter.post('/', authMiddleware, async (req, res) => {
+	//@ts-ignore
+	const { id } = req.user;
 
 	const { visitedCountries } = req.body;
 
