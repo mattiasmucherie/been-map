@@ -48,3 +48,30 @@ mapRouter.post('/', authMiddleware, async (req, res) => {
 
 	res.sendStatus(500);
 });
+
+mapRouter.put('/', authMiddleware, async (req, res) => {
+	//@ts-ignore
+	const { id } = req.user;
+
+	const { visitedCountries } = req.body;
+
+	if (!visitedCountries) {
+		res.sendStatus(400);
+		return;
+	}
+
+	const user = await User.findOne(parseInt(id, 10), { relations: ['map'] });
+
+	if (user) {
+		let map = await Map.findOne(user.map.id);
+		if (map) {
+			map.visitedCountries = visitedCountries;
+			map.save();
+			res.sendStatus(204);
+			return;
+		}
+		res.sendStatus(404);
+		return;
+	}
+	res.sendStatus(500);
+});
