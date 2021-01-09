@@ -5,19 +5,10 @@ import { createConnection } from 'typeorm';
 import { __prod__ } from './constants';
 import { Map } from './entities/Map';
 import { User } from './entities/User';
+import { databaseConfig } from './config/database.config';
 
 const main = async () => {
-	await createConnection({
-		type: 'postgres',
-		database: process.env.DATABASE_NAME,
-		username: process.env.DATABASE_USERNAME,
-		password: process.env.DATABASE_PASSWORD,
-		host: process.env.DATABASE_URL,
-		port: parseInt(process.env.DATABASE_PORT, 10),
-		entities: [User, Map],
-		logging: !__prod__,
-		synchronize: !__prod__,
-	}).catch((err: Error) =>
+	await createConnection(databaseConfig).catch((err: Error) =>
 		console.log(`Error establishing database connection: ${err.message}`)
 	);
 
@@ -81,7 +72,6 @@ const main = async () => {
 	});
 
 	app.post('/api/map', async (req, res) => {
-		console.log('yey');
 		const id = 1; // get from token
 
 		const { visitedCountries } = req.body;
