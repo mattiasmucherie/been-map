@@ -71,6 +71,7 @@ const MapChart: React.FC<MapChartProps> = ({ countriesBeen, setCountriesBeen, se
                   hover: {
                     fill: shadeColor(secondary, 15),
                     outline: 0,
+                    cursor: 'pointer',
                   },
                   pressed: {
                     fill: secondary,
