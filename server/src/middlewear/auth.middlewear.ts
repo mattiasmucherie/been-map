@@ -9,7 +9,7 @@ export const authMiddleware = (
 		return next();
 	} else {
 		return res.status(401).send({
-			message: 'not authenticated',
+			message: 'Not authenticated',
 		});
 	}
 };
