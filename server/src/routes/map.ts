@@ -67,7 +67,7 @@ mapRouter.put('/', authMiddleware, async (req, res) => {
 		if (map) {
 			map.visitedCountries = visitedCountries;
 			map.save();
-			res.sendStatus(204);
+			res.status(200).json(map);
 			return;
 		}
 		res.sendStatus(404);

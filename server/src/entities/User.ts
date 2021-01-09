@@ -13,13 +13,13 @@ export class User extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column({ type: 'text', nullable: true, unique: true })
+	@Column({ type: 'text', unique: true })
 	username: string;
 
-	@Column({ type: 'text', nullable: true })
+	@Column({ type: 'text' })
 	password: string;
 
-	@Column({ type: 'text', nullable: true })
+	@Column({ type: 'text' })
 	salt: string;
 
 	@OneToOne(() => Map)
