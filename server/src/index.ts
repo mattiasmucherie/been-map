@@ -7,12 +7,16 @@ import { createConnection } from 'typeorm';
 import { userRouter } from './routes/user';
 import { mapRouter } from './routes/map';
 import { authRouter } from './routes/auth';
-import { User } from './entities/User';
 import { databaseConfig } from './config/database.config';
-import { localStrategy } from './config/passport.config';
 import { sessionConfig } from './config/session.config';
+import {
+	deserializer,
+	localStrategy,
+	serializer,
+} from './config/passport.config';
 
 const main = async () => {
+	//DATABASE CONNECTION
 	await createConnection(databaseConfig).catch((err: Error) =>
 		console.log(`Error establishing database connection: ${err.message}`)
 	);
@@ -20,34 +24,16 @@ const main = async () => {
 	const port = parseInt(process.env.API_PORT, 10);
 	const app = express();
 
+	// MIDDLEWEAR
+	app.use(express.json());
 	app.use(session(sessionConfig));
+
+	//PASSPORT
+	passport.serializeUser(serializer);
+	passport.deserializeUser(deserializer);
+	passport.use(localStrategy);
 	app.use(passport.initialize());
 	app.use(passport.session());
-	passport.use(localStrategy);
-
-	passport.serializeUser((user: any, done) => {
-		return done(null, user.id);
-	});
-
-	passport.deserializeUser(async (id, done: any) => {
-		try {
-			const user = await User.findOne({
-				where: {
-					id: id,
-				},
-			});
-
-			if (!user) {
-				return done(null, false, { message: 'User does not exist' });
-			}
-
-			return done(null, user);
-		} catch (err) {
-			return done(null, false, { message: 'Failed' });
-		}
-	});
-
-	app.use(express.json());
 
 	//ROUTES
 	app.use('/api/user', userRouter);
