@@ -10,6 +10,7 @@ import { authRouter } from './routes/auth';
 import { User } from './entities/User';
 import { databaseConfig } from './config/database.config';
 import { localStrategy } from './config/passport.config';
+import { sessionConfig } from './config/session.config';
 
 const main = async () => {
 	await createConnection(databaseConfig).catch((err: Error) =>
@@ -19,7 +20,7 @@ const main = async () => {
 	const port = parseInt(process.env.API_PORT, 10);
 	const app = express();
 
-	app.use(session({ secret: 'keyboard cat' }));
+	app.use(session(sessionConfig));
 	app.use(passport.initialize());
 	app.use(passport.session());
 	passport.use(localStrategy);
@@ -48,6 +49,7 @@ const main = async () => {
 
 	app.use(express.json());
 
+	//ROUTES
 	app.use('/api/user', userRouter);
 	app.use('/api/map', mapRouter);
 	app.use('/auth', authRouter);
