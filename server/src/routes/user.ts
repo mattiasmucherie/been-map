@@ -49,6 +49,18 @@ userRouter.post('/', async (req, res) => {
 		return res.status(400);
 	}
 
+	if (username.length < 5) {
+		return res
+			.status(400)
+			.json({ message: 'Username length should be greater than 5' });
+	}
+
+	if (password.length < 8) {
+		return res
+			.status(400)
+			.json({ message: 'Password length should be greater than 8' });
+	}
+
 	const salt = await bcrypt.genSalt(10);
 	const hash = await bcrypt.hash(password, salt);
 
