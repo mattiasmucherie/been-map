@@ -13,7 +13,7 @@ authRouter.post(
 
 authRouter.get('/authenticated', (req, res) => {
 	if (req.isAuthenticated()) {
-		res.json({ authenticated: true, user: req.user });
+		return res.status(200).json({ authenticated: true, user: req.user });
 	}
-	res.status(403).json({ authenticated: false });
+	return res.status(403).json({ authenticated: false });
 });

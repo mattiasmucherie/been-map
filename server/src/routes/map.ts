@@ -9,15 +9,13 @@ mapRouter.get('/:id', async (req, res) => {
 	const { id } = req.params;
 
 	if (!id) {
-		res.sendStatus(400);
-		return;
+		return res.status(400);
 	}
 
 	const map = await Map.findOne(parseInt(id, 10));
 
 	if (!map) {
-		res.sendStatus(404);
-		return;
+		return res.status(404);
 	}
 
 	res.json(map);
@@ -30,8 +28,7 @@ mapRouter.post('/', authMiddleware, async (req, res) => {
 	const { visitedCountries } = req.body;
 
 	if (!visitedCountries) {
-		res.sendStatus(400);
-		return;
+		return res.status(400);
 	}
 	const map = new Map();
 	map.visitedCountries = visitedCountries;
@@ -42,11 +39,10 @@ mapRouter.post('/', authMiddleware, async (req, res) => {
 	if (user) {
 		user.map = map;
 		await user.save();
-		res.sendStatus(204);
-		return;
+		return res.status(204);
 	}
 
-	res.sendStatus(500);
+	return res.status(500);
 });
 
 mapRouter.put('/', authMiddleware, async (req, res) => {
@@ -56,8 +52,7 @@ mapRouter.put('/', authMiddleware, async (req, res) => {
 	const { visitedCountries } = req.body;
 
 	if (!visitedCountries) {
-		res.sendStatus(400);
-		return;
+		return res.status(400);
 	}
 
 	const user = await User.findOne(parseInt(id, 10), { relations: ['map'] });
@@ -67,11 +62,9 @@ mapRouter.put('/', authMiddleware, async (req, res) => {
 		if (map) {
 			map.visitedCountries = visitedCountries;
 			map.save();
-			res.status(200).json(map);
-			return;
+			return res.status(200).json(map);
 		}
-		res.sendStatus(404);
-		return;
+		return res.sendStatus(404);
 	}
-	res.sendStatus(500);
+	return res.sendStatus(500);
 });
