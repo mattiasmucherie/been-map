@@ -23,10 +23,8 @@ const main = async () => {
 		console.log(`Error establishing database connection: ${err.message}`)
 	);
 
-	const port = parseInt(process.env.API_PORT, 10);
-	const app = express();
-
 	// MIDDLEWEAR
+	const app = express();
 	app.use(express.json());
 	app.use(session(sessionConfig));
 	app.use(cors(corsConfig));
@@ -42,11 +40,12 @@ const main = async () => {
 	app.use('/api/user', userRouter);
 	app.use('/api/map', mapRouter);
 	app.use('/auth', authRouter);
-
 	app.get('/', (_req, res) => {
 		res.send('Hello World!');
 	});
 
+	// START HTTP SERVER
+	const port = parseInt(process.env.API_PORT, 10);
 	app.listen(port, () => {
 		console.log(`Server started at http:///localhost:${port}`);
 	});
