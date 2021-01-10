@@ -3,12 +3,14 @@ require('dotenv').config();
 import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
+import cors from 'cors';
 import { createConnection } from 'typeorm';
 import { userRouter } from './routes/user';
 import { mapRouter } from './routes/map';
 import { authRouter } from './routes/auth';
 import { databaseConfig } from './config/database.config';
 import { sessionConfig } from './config/session.config';
+import { corsConfig } from './config/cors.config';
 import {
 	deserializer,
 	localStrategy,
@@ -27,6 +29,7 @@ const main = async () => {
 	// MIDDLEWEAR
 	app.use(express.json());
 	app.use(session(sessionConfig));
+	app.use(cors(corsConfig));
 
 	//PASSPORT
 	passport.serializeUser(serializer);
