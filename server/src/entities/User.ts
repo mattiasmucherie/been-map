@@ -16,10 +16,10 @@ export class User extends BaseEntity {
 	@Column({ type: 'text', unique: true })
 	username: string;
 
-	@Column({ type: 'text' })
+	@Column({ type: 'text', select: false })
 	password: string;
 
-	@Column({ type: 'text' })
+	@Column({ type: 'text', select: false })
 	salt: string;
 
 	@OneToOne(() => Map)

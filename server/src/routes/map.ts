@@ -39,7 +39,7 @@ mapRouter.post('/', authMiddleware, async (req, res) => {
 	if (user) {
 		user.map = map;
 		await user.save();
-		return res.status(204);
+		return res.status(200).json(map);
 	}
 
 	return res.status(500);

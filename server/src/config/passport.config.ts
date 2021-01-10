@@ -11,11 +11,12 @@ export const localStrategy: Strategy = new LocalStrategy(
 	},
 	async (username: string, password: string, done: any) => {
 		try {
-			const user = await User.findOne({
-				where: {
-					username: username,
-				},
-			});
+			const user = await User.createQueryBuilder()
+				.select(['User.id', 'User.username'])
+				.where({ username: username })
+				.addSelect(['User.password', 'User.salt'])
+				.getOneOrFail();
+
 			if (!user) {
 				return done(null, false, {
 					message: 'Incorrect credentials.',
@@ -45,11 +46,11 @@ export const serializer = (user: any, done: any) => {
 
 export const deserializer = async (id: number, done: any) => {
 	try {
-		const user = await User.findOne({
-			where: {
-				id: id,
-			},
-		});
+		const user = await User.createQueryBuilder()
+			.select(['User.id', 'User.username'])
+			.where({ id: id })
+			.addSelect(['User.password', 'User.salt'])
+			.getOneOrFail();
 
 		if (!user) {
 			return done(null, false, { message: 'User does not exist' });
