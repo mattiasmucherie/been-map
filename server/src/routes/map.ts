@@ -30,16 +30,22 @@ mapRouter.post('/', authMiddleware, async (req, res) => {
 	if (!visitedCountries) {
 		return res.status(400);
 	}
-	const map = new Map();
-	map.visitedCountries = visitedCountries;
-	await Map.save(map);
-
-	const user = await User.findOne(id);
+	const user = await User.findOne(parseInt(id, 10), { relations: ['map'] });
 
 	if (user) {
-		user.map = map;
-		await user.save();
-		return res.status(200).json(map);
+		if (user.map) {
+			return res.status(400).json({ message: 'User already has a map' });
+		}
+
+		const map = new Map();
+		map.visitedCountries = visitedCountries;
+		await Map.save(map);
+
+		if (user) {
+			user.map = map;
+			await user.save();
+			return res.status(200).json(map);
+		}
 	}
 
 	return res.status(500);
